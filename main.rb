@@ -1,9 +1,18 @@
 require_relative "lib/player"
 require_relative "lib/game"
 
-new_game = Game.new
+def play
+  new_game = Game.new
+  puts "Saved game found. Continue? (y/n)"
+  choice = gets.chomp.downcase
+  if choice == "y"
+    data = File.read("save.json")
+    new_game.unserialize(data)
+    new_game.start_game
+  elsif choice == "n"
+    new_game.start_game
+  end
+end
 
-new_game.generate_word
-player = Player.new
-
-player.input
+play
+# File.delete("save.json") if new_game.game_over? && File.exist?("save.json")

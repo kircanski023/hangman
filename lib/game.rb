@@ -50,21 +50,22 @@ class Game
     end
   end
 
-  def start_game # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+  def start_game # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     i = 30 - @incorrect.length # resume based on incorrect guesses
 
     while i.positive?
-      break if game_over?
 
       i -= 1 unless valid?
       write_to_result
       p result
       puts "Incorrect letters: #{@incorrect}\n--------------------------" unless @incorrect.empty?
       puts "Attempts remaining #{i}\n--------------------------"
+      break if game_over?
 
       # Offer to save and exit
-      puts "Type 'save' to save and exit, or press Enter to continue:" unless game_over?
-      input = gets.chomp unless game_over?
+      puts "Type 'save' to save and exit, or press Enter to continue:"
+
+      input = gets.chomp
       next unless input.downcase == "save"
 
       File.write("save.json", serialize)

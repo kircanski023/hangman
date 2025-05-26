@@ -15,4 +15,3 @@ def play
 end
 
 play
-# File.delete("save.json") if new_game.game_over? && File.exist?("save.json")
